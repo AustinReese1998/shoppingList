@@ -1,20 +1,22 @@
 "use strict"
-
-Subject
+var cbId = 0
 
 class View extends Subject{
-	constructor(listArray){
+	constructor(){
 		super()
 	}
 
-	replaceTable(list){
-
+	replaceTable(){
+		cbId = 0
 		let listArray = list.getShoppingList()
 		let myTable = document.querySelector("#nextItem")
 		myTable.innerHTML = ""
 		for (let i = 0; i < listArray.length; i++){
+			cbId = cbId + 1
+
 
 			let tr = document.createElement("tr")
+			tr.setAttribute("id", "row" + cbId)
 
 			let itemCol = document.createElement("td")
 			let quanCol = document.createElement("td")
@@ -36,7 +38,14 @@ class View extends Subject{
 			storCol.innerHTML = storName
 			cateCol.innerHTML = cateName
 			pricCol.innerHTML = pricName
+			
+			let box = document.createElement("input")
+			box.type = "checkbox"
+			box.classList.add("form-control")
+			box.setAttribute("id", "box" + cbId)
+			box.onchange = boxClick
 
+			tr.appendChild(box)
 			tr.appendChild(itemCol)
 			tr.appendChild(quanCol)
 			tr.appendChild(prioCol)
@@ -47,8 +56,5 @@ class View extends Subject{
 			myTable.appendChild(tr)
 
 		}
-
-		console.log("Item added", list[listArray.length - 1])
-		console.log("Current list:", list)
 	}
 }

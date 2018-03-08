@@ -20,16 +20,19 @@ class Subject{
 			fn(scope, msg)
 		}
 	console.log(msg)
+	this.handlers = []
 	}
 }
 class Item {
-    constructor(item, quan, prio, stor, cate, pric) {
+    constructor(item, quan, prio, stor, cate, pric, itemId) {
         this.item = item
         this.quan = quan
         this.prio = prio
         this.stor = stor
         this.cate = cate
         this.pric = pric
+        this.itemId = itemId
+        this.bought = false
     }
     getItem() {
         return this.item
@@ -49,6 +52,12 @@ class Item {
     getPric() {
         return this.pric
     }
+    getBought() {
+    	return this.bought
+    }
+    getItemId() {
+    	return this.itemId
+    }
     setItem(item) {
         this.item = item
     }
@@ -67,12 +76,15 @@ class Item {
     setPric(pric) {
         this.pric = pric
     }
+    setBought() {
+    	this.bought = true
+    }
 }
 
 class shoppingList extends Subject{
     constructor() {
         super();
-        this.shopList = new Array()
+        this.shopList = []
     }
     getShoppingList() {
         return this.shopList
@@ -94,9 +106,12 @@ class shoppingList extends Subject{
     delFromList(item) {
         for (let i=0; i<this.shopList.length; i++){
             if (this.shopList[i] == item){
-                shopList.splice(i, i + 1)
+                this.shopList.splice(i, 1)
             }
         }
         super.publish("Removed item", this)
+    }
+    refresh(){
+    	super.publish("Reload", this)
     }
 }
