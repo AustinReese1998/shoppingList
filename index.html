@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Welcome to Monkey Grocery</title>
+		<title>Got Milk?</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	</head>
 
-	<body>
+	<body onload = setUp()>
 		<div class=container>
 			<h1 class="col-md-9">Shopping List</h1>
 			<div class="input-group col-md-3">
-				<input type="text" name="numPrimes" id="numPrimes" class="form-control" placeholder="Search">
+				<input type="text" id="search" class="form-control" placeholder="Search">
 			</div>
 			<div class="col-md-12">
 				<div class="col-md-4">
@@ -40,7 +41,6 @@
 					    <option>Low</option>
 					    <option>Medium</option>
 					    <option>High</option>
-					    <option>Turkey</option>
 					  </select>
 					</div>
 				</div>
@@ -77,7 +77,7 @@
 			      <div class="panel-heading">Price</div>
 		        </div>
 		        <div class="col-md-2"></div>
-					<button class="btn btn-success col-md-4" onclick=addItem()>Add Item</button>
+					<button class="btn btn-success col-md-4" id="addButton" onclick=addItem()>Add Item</button>
                <div class="col-md-1"></div>
             </div>
             <div class="col-md-12">
@@ -85,12 +85,12 @@
 					<thead>
 						<tr>
 							<th>Buy</th>
-							<th>Item</th>
-							<th>Quantity</th>
-							<th>Priority</th>
-							<th>Store</th>
-							<th>Category</th>
-							<th>Price</th>
+							<th><button class="btn-default center-block" onclick=byItem()>Item</button></th>
+							<th><button class="btn-default center-block" onclick=byQuan()>Quantity</button></th>
+							<th><button class="btn-default center-block" onclick=byPrio()>Priority</button></th>
+							<th><button class="btn-default center-block" onclick=byStor()>Store</button></th>
+							<th><button class="btn-default center-block" onclick=byCate()>Category</button></th>
+							<th><button class="btn-default center-block" onclick=byPric()>Price</button></th>
 						</tr>
 					</thead>
 				<tbody id="nextItem"></tbody>

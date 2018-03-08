@@ -39,11 +39,13 @@ class View extends Subject{
 			cateCol.innerHTML = cateName
 			pricCol.innerHTML = pricName
 			
-			let box = document.createElement("input")
+			var box = document.createElement("input")
 			box.type = "checkbox"
 			box.classList.add("form-control")
 			box.setAttribute("id", "box" + cbId)
 			box.onchange = boxClick
+			let boxCol = document.createElement("td")
+			boxCol.innerHTML = box.value
 
 			tr.appendChild(box)
 			tr.appendChild(itemCol)
@@ -52,9 +54,17 @@ class View extends Subject{
 			tr.appendChild(storCol)
 			tr.appendChild(cateCol)
 			tr.appendChild(pricCol)
+			if (prioName === "Low"){
+				tr.classList.add("info")
+			}
+			else if (prioName === "Medium"){
+				tr.classList.add("warning")
+			}
+			else{
+				tr.classList.add("danger")
+			}
 
 			myTable.appendChild(tr)
-
 		}
 	}
 }

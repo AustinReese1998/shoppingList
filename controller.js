@@ -5,6 +5,16 @@ let view = new View()
 
 var itemId = 0
 
+function setUp() {
+	console.log("load successful")
+	let selItem = document.getElementById("selItem")
+	selItem.addEventListener("keyup", function(event){
+		event.preventDefault()
+		if (event.keyCode === 13){
+			document.getElementById("addButton").click()
+		}
+	})
+}
 
 function addItem() {
 
@@ -24,6 +34,8 @@ function addItem() {
 
 	let item = new Item(itemName, quanName, prioName, storName, cateName, pricName, itemId)
 	list.addToList(item)
+
+	document.getElementById("selItem").value = ""
 
 }
 
@@ -50,8 +62,34 @@ function boxClick(){
 }
 
 
-function thisFunctionDoesNothing(){
-	console.log("Nothing was done")
+function byItem(){
+	list.subscribe(view.replaceTable)
+	list.sortByItem()
+}
+
+function byQuan(){
+	list.subscribe(view.replaceTable)
+	list.sortByQuan()
+}
+
+function byPrio(){
+	list.subscribe(view.replaceTable)
+	list.sortByPrio()
+}
+
+function byStor(){
+	list.subscribe(view.replaceTable)
+	list.sortByStor()
+}
+
+function byCate(){
+	list.subscribe(view.replaceTable)
+	list.sortByCate()
+}
+
+function byPric(){
+	list.subscribe(view.replaceTable)
+	list.sortByPric()
 }
 
 

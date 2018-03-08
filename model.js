@@ -114,4 +114,149 @@ class shoppingList extends Subject{
     refresh(){
     	super.publish("Reload", this)
     }
+    sortByItem(){
+    	let itemKeys = []
+    	for (let item of this.shopList){
+    		let itemKey = item.getItem() + item.getItemId()
+    		itemKeys.push(itemKey)
+    	}
+    	itemKeys.sort()
+    	let newShopList = []
+    	let notSorted = true
+		for (let sortedItem of itemKeys){
+			for (let unsortedItem of this.shopList){
+				let itemId = parseInt(sortedItem.slice(-1))
+				if (unsortedItem.getItemId() === itemId){
+					newShopList.push(unsortedItem)
+    				
+    			}
+    		}
+    	}
+    	this.shopList = newShopList
+    	super.publish("Sorted by Item", this)
+    }
+    sortByItem(){
+    	let itemKeys = []
+    	for (let item of this.shopList){
+    		let itemKey = item.getItem() + item.getItemId()
+    		itemKeys.push(itemKey)
+    	}
+    	itemKeys.sort()
+    	let newShopList = []
+    	let notSorted = true
+		for (let sortedItem of itemKeys){
+			for (let unsortedItem of this.shopList){
+				let itemId = parseInt(sortedItem.slice(-1))
+				if (unsortedItem.getItemId() === itemId){
+					newShopList.push(unsortedItem)
+    				
+    			}
+    		}
+    	}
+    	this.shopList = newShopList
+    	super.publish("Sorted by Item", this)
+    }
+    sortByQuan(){
+    	let quanKeys = []
+    	for (let item of this.shopList){
+    		let itemKey = item.getQuan() + item.getItemId()
+    		quanKeys.push(itemKey)
+    	}
+    	quanKeys.sort()
+    	let newShopList = []
+    	let notSorted = true
+		for (let sortedItem of quanKeys){
+			for (let unsortedItem of this.shopList){
+				let itemId = parseInt(sortedItem.slice(-1))
+				if (unsortedItem.getItemId() === itemId){
+					newShopList.push(unsortedItem)
+    				
+    			}
+    		}
+    	}
+    	this.shopList = newShopList
+    	this.shopList.reverse()
+    	super.publish("Sorted by Item", this)
+    }
+    sortByPrio(){
+    	let prioKeys = []
+
+    	for (let item of this.shopList){
+    		let prio = item.getPrio()
+    		if (prio === "High"){
+    		let itemKey = prio + item.getItemId()
+    		prioKeys.push(itemKey)
+    		}
+    	}
+    	for (let item of this.shopList){
+       	    let prio = item.getPrio()
+    		if (prio === "Medium"){
+    		let itemKey = prio + item.getItemId()
+    		prioKeys.push(itemKey)
+    		}
+    	}
+    	for (let item of this.shopList){
+            let prio = item.getPrio()
+    		if (prio === "Low"){
+    		let itemKey = prio + item.getItemId()
+    		prioKeys.push(itemKey)
+    		}
+    	}
+    	let newShopList = []
+    	let notSorted = true
+		for (let sortedItem of prioKeys){
+			for (let unsortedItem of this.shopList){
+				let itemId = parseInt(sortedItem.slice(-1))
+				if (unsortedItem.getItemId() === itemId){
+					newShopList.push(unsortedItem)
+    				
+    			}
+    		}
+    	}
+    	this.shopList = newShopList
+    	super.publish("Sorted by Item", this)
+    }
+    sortByStor(){
+    	let storKeys = []
+    	for (let item of this.shopList){
+    		let itemKey = item.getStor() + item.getItemId()
+    		storKeys.push(itemKey)
+    	}
+    	storKeys.sort()
+    	let newShopList = []
+    	let notSorted = true
+		for (let sortedItem of storKeys){
+			for (let unsortedItem of this.shopList){
+				let itemId = parseInt(sortedItem.slice(-1))
+				if (unsortedItem.getItemId() === itemId){
+					newShopList.push(unsortedItem)
+    				
+    			}
+    		}
+    	}
+    	this.shopList = newShopList
+    	super.publish("Sorted by Item", this)
+    }
+    sortByCate(){
+    	let cateKeys = []
+    	for (let item of this.shopList){
+    		let itemKey = item.getCate() + item.getItemId()
+    		cateKeys.push(itemKey)
+    	}
+    	cateKeys.sort()
+    	let newShopList = []
+    	let notSorted = true
+		for (let sortedItem of cateKeys){
+			for (let unsortedItem of this.shopList){
+				let itemId = parseInt(sortedItem.slice(-1))
+				if (unsortedItem.getItemId() === itemId){
+					newShopList.push(unsortedItem)
+    				
+    			}
+    		}
+    	}
+    	this.shopList = newShopList
+    	super.publish("Sorted by Item", this)
+    }
 }
+
