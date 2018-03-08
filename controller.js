@@ -1,9 +1,12 @@
 "use strict"
 
 let list = new shoppingList()
+let purchasedList = new shoppingList()
 let view = new View()
 
 var itemId = 0
+var localRecord = ""
+var localPurchased = ""
 
 function setUp() {
 	console.log("load successful")
@@ -14,6 +17,24 @@ function setUp() {
 			document.getElementById("addButton").click()
 		}
 	})
+
+	let rawList = JSON.parse(localStorage.getItem('list'))
+
+	for (let item of rawList.shopList){
+		list.subscribe(view.replaceTable)
+
+		let newItem = new Item(item.item, item.quan, item.prio, 
+			item.stor, item.cate, item.pric, item.itemId, item.bought)
+		list.addToList(newItem)
+	}
+
+	let rawPurchased = JSON.parse(localStorage.getItem('purchasedList'))
+
+	for (let item of rawPurchased.shopList){
+		let newItem = new Item(item.item, item.quan, item.prio, 
+			item.stor, item.cate, item.pric, item.itemId, item.bought)
+		purchasedList.addToList(newItem)
+	}
 }
 
 function addItem() {
@@ -32,10 +53,14 @@ function addItem() {
 
 	let tr = document.createElement("tr")
 
-	let item = new Item(itemName, quanName, prioName, storName, cateName, pricName, itemId)
+	let item = new Item(itemName, quanName, prioName, storName, cateName, 
+		pricName, itemId, false)
 	list.addToList(item)
 
 	document.getElementById("selItem").value = ""
+
+	localRecord = JSON.stringify(list)
+	localStorage.setItem('list', localRecord)
 
 }
 
@@ -53,12 +78,21 @@ function boxClick(){
 		let boughtItem = document.getElementById("row" + cbId)
 		if (box.checked){
 			boughtItem.style.setProperty("text-decoration", "line-through")
+			item.setBought()
+			purchasedList.addToList(item)
 			list.delFromList(item)
+
 		}
 		else{
 			boughtItem.style.setProperty("text-decoration", "none")
 		}
 	}
+	localRecord = JSON.stringify(list)
+	localPurchased = JSON.stringify(purchasedList)
+	localStorage.setItem('list', localRecord)
+	//localStorage.setItem('purchasedList', localPurchased)
+	console.log(purchasedList)
+
 }
 
 
