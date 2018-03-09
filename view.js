@@ -25,6 +25,14 @@ class View extends Subject{
 			let cateCol = document.createElement("td")
 			let pricCol = document.createElement("td")
 
+			itemCol.classList.add("text-center")
+			quanCol.classList.add("text-center")
+			prioCol.classList.add("text-center")
+			storCol.classList.add("text-center")
+			cateCol.classList.add("text-center")
+			pricCol.classList.add("text-center")
+
+
 			let itemName = listArray[i].getItem()
 			let quanName = listArray[i].getQuan()
 			let prioName = listArray[i].getPrio()
