@@ -3,8 +3,8 @@
 let list = new shoppingList()
 let purchasedList = new shoppingList()
 let view = new View()
-
-var itemId = parseInt(localStorage.getItem("itemId"))
+var itemId = 0
+itemId = parseInt(localStorage.getItem("itemId"))
 var localRecord = ""
 var localPurchased = ""
 
