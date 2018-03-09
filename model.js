@@ -19,12 +19,11 @@ class Subject{
 		for (let fn of this.handlers){
 			fn(scope, msg)
 		}
-	console.log(msg)
 	this.handlers = []
 	}
 }
 class Item {
-    constructor(item, quan, prio, stor, cate, pric, itemId) {
+    constructor(item, quan, prio, stor, cate, pric, itemId, bought) {
         this.item = item
         this.quan = quan
         this.prio = prio
@@ -32,7 +31,7 @@ class Item {
         this.cate = cate
         this.pric = pric
         this.itemId = itemId
-        this.bought = false
+        this.bought = bought
     }
     getItem() {
         return this.item
@@ -117,7 +116,7 @@ class shoppingList extends Subject{
     sortByItem(){
     	let itemKeys = []
     	for (let item of this.shopList){
-    		let itemKey = item.getItem() + item.getItemId()
+    		let itemKey = item.getItem() + ":" + item.getItemId()
     		itemKeys.push(itemKey)
     	}
     	itemKeys.sort()
@@ -125,28 +124,7 @@ class shoppingList extends Subject{
     	let notSorted = true
 		for (let sortedItem of itemKeys){
 			for (let unsortedItem of this.shopList){
-				let itemId = parseInt(sortedItem.slice(-1))
-				if (unsortedItem.getItemId() === itemId){
-					newShopList.push(unsortedItem)
-    				
-    			}
-    		}
-    	}
-    	this.shopList = newShopList
-    	super.publish("Sorted by Item", this)
-    }
-    sortByItem(){
-    	let itemKeys = []
-    	for (let item of this.shopList){
-    		let itemKey = item.getItem() + item.getItemId()
-    		itemKeys.push(itemKey)
-    	}
-    	itemKeys.sort()
-    	let newShopList = []
-    	let notSorted = true
-		for (let sortedItem of itemKeys){
-			for (let unsortedItem of this.shopList){
-				let itemId = parseInt(sortedItem.slice(-1))
+				let itemId = parseInt(sortedItem.substr(parseInt(sortedItem.indexOf(":")) + 1, sortedItem.length))
 				if (unsortedItem.getItemId() === itemId){
 					newShopList.push(unsortedItem)
     				
@@ -159,15 +137,14 @@ class shoppingList extends Subject{
     sortByQuan(){
     	let quanKeys = []
     	for (let item of this.shopList){
-    		let itemKey = item.getQuan() + item.getItemId()
+    		let itemKey = item.getQuan() + ":" + item.getItemId()
     		quanKeys.push(itemKey)
     	}
     	quanKeys.sort()
     	let newShopList = []
-    	let notSorted = true
 		for (let sortedItem of quanKeys){
 			for (let unsortedItem of this.shopList){
-				let itemId = parseInt(sortedItem.slice(-1))
+				let itemId = parseInt(sortedItem.substr(parseInt(sortedItem.indexOf(":")) + 1, sortedItem.length))
 				if (unsortedItem.getItemId() === itemId){
 					newShopList.push(unsortedItem)
     				
@@ -176,7 +153,7 @@ class shoppingList extends Subject{
     	}
     	this.shopList = newShopList
     	this.shopList.reverse()
-    	super.publish("Sorted by Item", this)
+    	super.publish("Sorted by Quantity", this)
     }
     sortByPrio(){
     	let prioKeys = []
@@ -184,29 +161,28 @@ class shoppingList extends Subject{
     	for (let item of this.shopList){
     		let prio = item.getPrio()
     		if (prio === "High"){
-    		let itemKey = prio + item.getItemId()
+    		let itemKey = prio + ":" + item.getItemId()
     		prioKeys.push(itemKey)
     		}
     	}
     	for (let item of this.shopList){
        	    let prio = item.getPrio()
     		if (prio === "Medium"){
-    		let itemKey = prio + item.getItemId()
+    		let itemKey = prio + ":" + item.getItemId()
     		prioKeys.push(itemKey)
     		}
     	}
     	for (let item of this.shopList){
             let prio = item.getPrio()
     		if (prio === "Low"){
-    		let itemKey = prio + item.getItemId()
+    		let itemKey = prio + ":" + item.getItemId()
     		prioKeys.push(itemKey)
     		}
     	}
     	let newShopList = []
-    	let notSorted = true
 		for (let sortedItem of prioKeys){
 			for (let unsortedItem of this.shopList){
-				let itemId = parseInt(sortedItem.slice(-1))
+				let itemId = parseInt(sortedItem.substr(parseInt(sortedItem.indexOf(":")) + 1, sortedItem.length))
 				if (unsortedItem.getItemId() === itemId){
 					newShopList.push(unsortedItem)
     				
@@ -214,20 +190,19 @@ class shoppingList extends Subject{
     		}
     	}
     	this.shopList = newShopList
-    	super.publish("Sorted by Item", this)
+    	super.publish("Sorted by Priority", this)
     }
     sortByStor(){
     	let storKeys = []
     	for (let item of this.shopList){
-    		let itemKey = item.getStor() + item.getItemId()
+    		let itemKey = item.getStor() + ":" + item.getItemId()
     		storKeys.push(itemKey)
     	}
     	storKeys.sort()
     	let newShopList = []
-    	let notSorted = true
 		for (let sortedItem of storKeys){
 			for (let unsortedItem of this.shopList){
-				let itemId = parseInt(sortedItem.slice(-1))
+				let itemId = parseInt(sortedItem.substr(parseInt(sortedItem.indexOf(":")) + 1, sortedItem.length))
 				if (unsortedItem.getItemId() === itemId){
 					newShopList.push(unsortedItem)
     				
@@ -235,20 +210,19 @@ class shoppingList extends Subject{
     		}
     	}
     	this.shopList = newShopList
-    	super.publish("Sorted by Item", this)
+    	super.publish("Sorted by Store", this)
     }
     sortByCate(){
     	let cateKeys = []
     	for (let item of this.shopList){
-    		let itemKey = item.getCate() + item.getItemId()
+    		let itemKey = item.getCate() + ":" + item.getItemId()
     		cateKeys.push(itemKey)
     	}
     	cateKeys.sort()
     	let newShopList = []
-    	let notSorted = true
 		for (let sortedItem of cateKeys){
 			for (let unsortedItem of this.shopList){
-				let itemId = parseInt(sortedItem.slice(-1))
+				let itemId = parseInt(sortedItem.substr(parseInt(sortedItem.indexOf(":")) + 1, sortedItem.length))
 				if (unsortedItem.getItemId() === itemId){
 					newShopList.push(unsortedItem)
     				
@@ -256,7 +230,10 @@ class shoppingList extends Subject{
     		}
     	}
     	this.shopList = newShopList
-    	super.publish("Sorted by Item", this)
+    	super.publish("Sorted by Category", this)
+    }
+    sortByPric(){
+    	console.log("Not today...")
     }
 }
 

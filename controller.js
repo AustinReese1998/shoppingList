@@ -4,7 +4,7 @@ let list = new shoppingList()
 let purchasedList = new shoppingList()
 let view = new View()
 
-var itemId = 0
+var itemId = parseInt(localStorage.getItem("itemId"))
 var localRecord = ""
 var localPurchased = ""
 
@@ -61,6 +61,7 @@ function addItem() {
 
 	localRecord = JSON.stringify(list)
 	localStorage.setItem('list', localRecord)
+	localStorage.setItem('itemId', itemId)
 
 }
 
@@ -91,7 +92,6 @@ function boxClick(){
 	localPurchased = JSON.stringify(purchasedList)
 	localStorage.setItem('list', localRecord)
 	//localStorage.setItem('purchasedList', localPurchased)
-	console.log(purchasedList)
 
 }
 
