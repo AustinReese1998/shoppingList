@@ -3,13 +3,15 @@
 let list = new shoppingList()
 let purchasedList = new shoppingList()
 let view = new View()
-var itemId = 0
-itemId = parseInt(localStorage.getItem("itemId"))
+var itemId = parseInt(localStorage.getItem("itemId"))
+if (isNaN(itemId)){
+	itemId = 0
+}
+console.log(itemId)
 var localRecord = ""
 var localPurchased = ""
 
 function setUp() {
-	console.log("load successful")
 	let selItem = document.getElementById("selItem")
 	selItem.addEventListener("keyup", function(event){
 		event.preventDefault()
@@ -35,6 +37,9 @@ function setUp() {
 			item.stor, item.cate, item.pric, item.itemId, item.bought)
 		purchasedList.addToList(newItem)
 	}
+
+	console.log("Load successful")
+
 }
 
 function addItem() {
