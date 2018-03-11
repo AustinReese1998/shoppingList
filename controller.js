@@ -7,7 +7,6 @@ var itemId = parseInt(localStorage.getItem("itemId"))
 if (isNaN(itemId)){
 	itemId = 0
 }
-console.log(itemId)
 var localRecord = ""
 var localPurchased = ""
 
@@ -32,10 +31,15 @@ function setUp() {
 
 	let rawPurchased = JSON.parse(localStorage.getItem('purchasedList'))
 
-	for (let item of rawPurchased.shopList){
-		let newItem = new Item(item.item, item.quan, item.prio, 
-			item.stor, item.cate, item.pric, item.itemId, item.bought)
-		purchasedList.addToList(newItem)
+	if (rawPurchased == null){
+		localStorage.setItem("purchasedList", new shoppingList())
+	}
+	else{
+		for (let item of rawPurchased.shopList){
+			let newItem = new Item(item.item, item.quan, item.prio, 
+				item.stor, item.cate, item.pric, item.itemId, item.bought)
+			purchasedList.addToList(newItem)
+		}
 	}
 
 	console.log("Load successful")
@@ -96,7 +100,7 @@ function boxClick(){
 	localRecord = JSON.stringify(list)
 	localPurchased = JSON.stringify(purchasedList)
 	localStorage.setItem('list', localRecord)
-	//localStorage.setItem('purchasedList', localPurchased)
+	localStorage.setItem('purchasedList', localPurchased)
 
 }
 
@@ -130,9 +134,3 @@ function byPric(){
 	list.subscribe(view.replaceTable)
 	list.sortByPric()
 }
-
-
-
-
-
-
