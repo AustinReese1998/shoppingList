@@ -10,6 +10,11 @@ if (isNaN(itemId)){
 var localRecord = ""
 var localPurchased = ""
 
+var d = new Date()
+
+var months = {0:"January", 1:"February", 2:"March", 3:"April", 4:"May", 5:"June", 6:"July",
+7:"August", 8:"September", 9:"October", 10:"November", 11:"December"}
+
 function setUp() {
 	let selItem = document.getElementById("selItem")
 	selItem.addEventListener("keyup", function(event){
@@ -36,6 +41,25 @@ function setUp() {
 	}
 	else{
 		for (let item of rawPurchased.shopList){
+			let newItem = new Item(item.item, item.quan, item.prio, 
+				item.stor, item.cate, item.pric, item.itemId, item.bought)
+			purchasedList.addToList(newItem)
+		}
+	}
+
+	console.log("Load successful")
+
+}
+
+function purchasedSetUp() {
+	let rawPurchased = JSON.parse(localStorage.getItem('purchasedList'))
+
+	if (rawPurchased == null){
+		localStorage.setItem("purchasedList", new shoppingList())
+	}
+	else{
+		for (let item of rawPurchased.shopList){
+			purchasedList.subscribe(view.replacePurchasedTable)
 			let newItem = new Item(item.item, item.quan, item.prio, 
 				item.stor, item.cate, item.pric, item.itemId, item.bought)
 			purchasedList.addToList(newItem)
@@ -104,6 +128,31 @@ function boxClick(){
 
 }
 
+function purchasedBoxClick(){
+	var cbId = 0
+
+	purchasedList.subscribe(view.replacePurchasedTable)
+
+
+
+	for (let item of purchasedList.getShoppingList()){
+		cbId = cbId + 1
+		let box = document.getElementById("box" + cbId)
+		let boughtItem = document.getElementById("row" + cbId)
+		if (box.checked){
+			boughtItem.style.setProperty("text-decoration", "line-through")
+			purchasedList.delFromList(item)
+
+		}
+		else{
+			boughtItem.style.setProperty("text-decoration", "none")
+		}
+	}
+	localPurchased = JSON.stringify(purchasedList)
+	localStorage.setItem('purchasedList', localPurchased)
+
+}
+
 
 function byItem(){
 	list.subscribe(view.replaceTable)
@@ -133,4 +182,33 @@ function byCate(){
 function byPric(){
 	list.subscribe(view.replaceTable)
 	list.sortByPric()
+}
+function purByItem(){
+	purchasedList.subscribe(view.replacePurchasedTable)
+	purchasedList.sortByItem()
+}
+
+function purByQuan(){
+	purchasedList.subscribe(view.replacePurchasedTable)
+	purchasedList.sortByQuan()
+}
+
+function purByPrio(){
+	purchasedList.subscribe(view.replacePurchasedTable)
+	purchasedList.sortByPrio()
+}
+
+function purByStor(){
+	purchasedList.subscribe(view.replacePurchasedTable)
+	purchasedList.sortByStor()
+}
+
+function purByCate(){
+	purchasedList.subscribe(view.replacePurchasedTable)
+	purchasedList.sortByCate()
+}
+
+function purByPric(){
+	purchasedList.subscribe(view.replacePurchasedTable)
+	purchasedList.sortByPric()
 }

@@ -76,7 +76,20 @@ class Item {
         this.pric = pric
     }
     setBought() {
-    	this.bought = true
+        let month = d.getMonth()
+        let day = d.getDate()
+        let year = d.getFullYear()
+        let hour = d.getHours()
+        let minute = d.getMinutes()
+        month = months[month]
+        minute = JSON.stringify(minute)
+        if (minute.length === 1){
+            minute = "0" + minute
+        }
+        this.bought = month + " " + day + ", " + year + "  -  " + hour + ":" + minute
+    }
+    getBought() {
+        return this.bought
     }
 }
 
