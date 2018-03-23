@@ -2,13 +2,9 @@
 
 let list = new shoppingList()
 let purchasedList = new shoppingList()
+
 let view = new View()
-var itemId = parseInt(localStorage.getItem("itemId"))
-if (isNaN(itemId)){
-	itemId = 0
-}
-var localRecord = ""
-var localPurchased = ""
+var itemId = 0
 
 var d = new Date()
 
@@ -16,6 +12,7 @@ var months = {0:"January", 1:"February", 2:"March", 3:"April", 4:"May", 5:"June"
 7:"August", 8:"September", 9:"October", 10:"November", 11:"December"}
 
 function setUp() {
+	get()
 	let selItem = document.getElementById("selItem")
 	selItem.addEventListener("keyup", function(event){
 		event.preventDefault()
@@ -24,57 +21,23 @@ function setUp() {
 		}
 	})
 
-	let rawList = JSON.parse(localStorage.getItem('list'))
-
-	for (let item of rawList.shopList){
-		list.subscribe(view.replaceTable)
-
-		let newItem = new Item(item.item, item.quan, item.prio, 
-			item.stor, item.cate, item.pric, item.itemId, item.bought)
-		list.addToList(newItem)
-	}
-
-	let rawPurchased = JSON.parse(localStorage.getItem('purchasedList'))
-
-	if (rawPurchased == null){
-		localStorage.setItem("purchasedList", new shoppingList())
-	}
-	else{
-		for (let item of rawPurchased.shopList){
-			let newItem = new Item(item.item, item.quan, item.prio, 
-				item.stor, item.cate, item.pric, item.itemId, item.bought)
-			purchasedList.addToList(newItem)
-		}
-	}
-
-	console.log("Load successful")
+	getPurchased(false)
 
 }
 
 function purchasedSetUp() {
-	let rawPurchased = JSON.parse(localStorage.getItem('purchasedList'))
 
-	if (rawPurchased == null){
-		localStorage.setItem("purchasedList", new shoppingList())
-	}
-	else{
-		for (let item of rawPurchased.shopList){
-			purchasedList.subscribe(view.replacePurchasedTable)
-			let newItem = new Item(item.item, item.quan, item.prio, 
-				item.stor, item.cate, item.pric, item.itemId, item.bought)
-			purchasedList.addToList(newItem)
-		}
-	}
-
-	console.log("Load successful")
+	getPurchased(true)
 
 }
 
 function addItem() {
 
 	itemId = itemId + 1
+	localStorage.setItem("itemId", itemId)
 
 	list.subscribe(view.replaceTable)
+	list.subscribe(set)
 
 	let itemName = document.getElementById("selItem").value
 	let quanName = document.getElementById("selQuan").value
@@ -92,9 +55,6 @@ function addItem() {
 
 	document.getElementById("selItem").value = ""
 
-	localRecord = JSON.stringify(list)
-	localStorage.setItem('list', localRecord)
-	localStorage.setItem('itemId', itemId)
 
 }
 
@@ -103,6 +63,8 @@ function boxClick(){
 	var cbId = 0
 
 	list.subscribe(view.replaceTable)
+	list.subscribe(set)
+	purchasedList.subscribe(setPurchased)
 
 
 
@@ -121,10 +83,6 @@ function boxClick(){
 			boughtItem.style.setProperty("text-decoration", "none")
 		}
 	}
-	localRecord = JSON.stringify(list)
-	localPurchased = JSON.stringify(purchasedList)
-	localStorage.setItem('list', localRecord)
-	localStorage.setItem('purchasedList', localPurchased)
 
 }
 
@@ -132,6 +90,7 @@ function purchasedBoxClick(){
 	var cbId = 0
 
 	purchasedList.subscribe(view.replacePurchasedTable)
+	purchasedList.subscribe(setPurchased)
 
 
 
@@ -148,8 +107,7 @@ function purchasedBoxClick(){
 			boughtItem.style.setProperty("text-decoration", "none")
 		}
 	}
-	localPurchased = JSON.stringify(purchasedList)
-	localStorage.setItem('purchasedList', localPurchased)
+
 
 }
 

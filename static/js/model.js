@@ -101,9 +101,14 @@ class shoppingList extends Subject{
     getShoppingList() {
         return this.shopList
     }
+    feedList(list){
+        this.shopList = list
+        super.publish("List initated", this)
+    }
     addToList(item) {
         this.shopList.push(item)
         super.publish("Item added", this)
+        console.log(item.getItemId())
     }
     getSize() {
         return this.shopList.length
