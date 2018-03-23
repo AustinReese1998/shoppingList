@@ -1,1 +1,1 @@
-[]
+[{"item":"","quan":"1","prio":"Low","stor":"DecoMart","cate":"Groceries","pric":"Not Implemented","itemId":1,"bought":"March 22, 2018  -  19:56"}]
